@@ -7,6 +7,10 @@ public class HeaderPage {
     Page page;
     private String currencyIcon = "button:has-text('Currency')";
     private String currencyOptions = "form#form-currency li button";
+    private String myAccount = "nav#top a[title='My Account']";
+    private String registerLink = "ul.dropdown-menu.dropdown-menu-right li a:has-text('Register')";
+    private String loginLink = "ul.dropdown-menu.dropdown-menu-right li a:has-text('Login')";
+
 
     public HeaderPage(Page page) {
         this.page = page;
@@ -25,6 +29,11 @@ public class HeaderPage {
 
     public String getCurrencyText() {
         return page.textContent(currencyIcon);
+    }
+
+    public void navigateToLoginPage() {
+        page.click(myAccount);
+        page.click(loginLink);
     }
 
 }

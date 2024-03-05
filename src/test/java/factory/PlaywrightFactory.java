@@ -33,20 +33,21 @@ public class PlaywrightFactory {
                     .launch(new BrowserType.LaunchOptions().setHeadless(false));
             default -> throw new IllegalArgumentException("Wrong browser type entered!");
         }
-        browserContext = browser.newContext();
+
     }
 
     public static Page initializePage() {
+        browserContext = browser.newContext();
         page = browserContext.newPage();
         return page;
     }
 
     public static void closePage() {
         page.close();
+        browserContext.close();
     }
 
     public static void closePlaywright() {
-        browserContext.close();
         browser.close();
         playwright.close();
     }
