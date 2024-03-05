@@ -2,14 +2,14 @@ package factory;
 
 import com.microsoft.playwright.*;
 
-public class PageFactory {
+public class PlaywrightFactory {
 
     private static Playwright playwright;
     private static Browser browser;
     private static BrowserContext browserContext;
     private static Page page;
 
-    public static Page initializePage() {
+    public static void initializePlaywright() {
         playwright = Playwright.create();
         String inputBrowser = System.getProperty("browser");
         String browserType = inputBrowser == null ? "chrome" : inputBrowser;
@@ -34,8 +34,15 @@ public class PageFactory {
             default -> throw new IllegalArgumentException("Wrong browser type entered!");
         }
         browserContext = browser.newContext();
+    }
+
+    public static Page initializePage() {
         page = browserContext.newPage();
         return page;
+    }
+
+    public static void closePage() {
+        page.close();
     }
 
     public static void closePlaywright() {
