@@ -4,15 +4,13 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-
 public class HomePageTest extends BaseTest {
 
     @Test(priority = 1, dataProvider = "searchDataProvider")
     public void performSearchAndVerifySearchPageTitle(String input) {
-        pom.homePage.navigateToHomePage();
-        pom.searchPage = pom.homePage.runSearch(input);
-        Assert.assertEquals(pom.searchPage.getSearchPageTitle(), "Search - " + input);
+        container().homePage.navigateToHomePage();
+        container().searchPage = container().homePage.runSearch(input);
+        Assert.assertEquals(container().searchPage.getSearchPageTitle(), "Search - " + input);
     }
 
     @DataProvider
@@ -22,9 +20,9 @@ public class HomePageTest extends BaseTest {
 
     @Test(priority = 2, dataProvider = "currencyDataProvider")
     public void selectAndVerifyCurrency(String currency, String currencySymbol) {
-        pom.homePage.navigateToHomePage();
-        pom.headerPage.selectCurrency(currency);
-        Assert.assertTrue(pom.headerPage.getCurrencyText().contains(currencySymbol));
+        container().homePage.navigateToHomePage();
+        container().headerPage.selectCurrency(currency);
+        Assert.assertTrue(container().headerPage.getCurrencyText().contains(currencySymbol));
     }
 
     @DataProvider

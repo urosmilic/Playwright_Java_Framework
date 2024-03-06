@@ -1,35 +1,26 @@
 package tests;
 
-import com.microsoft.playwright.*;
 import factory.PlaywrightFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.*;
 import pages.PomContainer;
 
 public class BaseTest {
-    Page page;
-    PomContainer pom;
+    static ThreadLocal<PomContainer> threadLocalPomContainer = new ThreadLocal<>();
 
-    @BeforeTest
-    public void setupPlaywright() {
-        PlaywrightFactory.initializePlaywright();
+    public static PomContainer container() {
+        return threadLocalPomContainer.get();
     }
 
     @BeforeMethod
     public void setup() {
-        page = PlaywrightFactory.initializePage();
-        pom = new PomContainer(page);
+        PlaywrightFactory.initializePlaywright();
+        threadLocalPomContainer.set(new PomContainer(PlaywrightFactory.initializePage()));
     }
 
     @AfterMethod
     public void tearDown() {
         PlaywrightFactory.closePage();
-    }
-
-    @AfterTest
-    public void tearDownPlaywright() {
         PlaywrightFactory.closePlaywright();
     }
+
 }

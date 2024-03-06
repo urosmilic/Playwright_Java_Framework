@@ -9,9 +9,9 @@ public class LoginPageTest extends BaseTest {
 
     @Test(priority = 3, dataProvider = "loginDataProvider")
     public void successfulLogin(HashMap<String, String> loginMap) {
-        pom.homePage.navigateToHomePage();
-        pom.headerPage.navigateToLoginPage();
-        pom.loginPage.login(loginMap.get("email"), loginMap.get("password"));
+        container().homePage.navigateToHomePage();
+        container().headerPage.navigateToLoginPage();
+        container().loginPage.login(loginMap.get("email"), loginMap.get("password"));
     }
 
     @DataProvider
