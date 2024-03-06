@@ -2,6 +2,9 @@ package factory;
 
 import com.microsoft.playwright.*;
 
+import java.nio.file.Paths;
+import java.util.Base64;
+
 public class PlaywrightFactory {
     private static ThreadLocal<Playwright> threadLocalPlaywright = new ThreadLocal<>();
     private static ThreadLocal<Browser> threadLocalBrowser = new ThreadLocal<>();
@@ -48,6 +51,13 @@ public class PlaywrightFactory {
     public static void closePlaywright() {
         threadLocalBrowser.get().close();
         threadLocalPlaywright.get().close();
+    }
+
+    public static String takeScreenshot() {
+        String path = System.getProperty("user.dir") + "/screenshot/" + System.currentTimeMillis() + ".png";
+        byte[] buffer = threadLocalPage.get().screenshot
+                (new Page.ScreenshotOptions().setPath(Paths.get(path)).setFullPage(true));
+        return Base64.getEncoder().encodeToString(buffer);
     }
 
 }
